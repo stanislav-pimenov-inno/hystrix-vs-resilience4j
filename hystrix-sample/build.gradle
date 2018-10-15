@@ -1,6 +1,3 @@
-version 'unspecified'
+dependencies {
 
-apply plugin: 'java'
-
-sourceCompatibility = 1.8
-
+}

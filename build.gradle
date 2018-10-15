@@ -17,16 +17,24 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
+subprojects {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
 
-dependencies {
-    implementation('org.springframework.boot:spring-boot-starter')
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    sourceCompatibility = 1.8
+
+    dependencies {
+        implementation('org.springframework.boot:spring-boot-starter')
+        implementation('org.springframework.boot:spring-boot-starter-web')
+        implementation "org.springframework.boot:spring-boot-starter-actuator"
+        testImplementation('org.springframework.boot:spring-boot-starter-test')
+    }
+
 }
 
-repositories {
-    mavenCentral()
-    jcenter()
-}

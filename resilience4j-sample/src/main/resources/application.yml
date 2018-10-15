@@ -1,0 +1,14 @@
+resilience4j.circuitbreaker:
+  backends:
+    apiCall:
+      ringBufferSizeInClosedState: 5
+      ringBufferSizeInHalfOpenState: 3
+      waitInterval: 5000
+      failureRateThreshold: 50
+      eventConsumerBufferSize: 10
+      registerHealthIndicator: true
+      #recordFailurePredicate: com.foo.FooRecordFailurePredicate
+      recordExceptions:
+          - org.springframework.web.client.HttpServerErrorException
+      ignoreExceptions:
+          - org.springframework.web.client.HttpClientErrorException
