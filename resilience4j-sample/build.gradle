@@ -5,5 +5,7 @@ dependencies {
     implementation group: 'io.github.resilience4j', name: 'resilience4j-timelimiter', version: '0.13.1'
     implementation group: 'io.github.resilience4j', name: 'resilience4j-timelimiter', version: '0.13.1'
 
-    //implementation('io.github.resilience4j:resilience4j-spring-boot2:0.13.1')
+
+    // needed for actuator metrics
+    implementation('io.github.resilience4j:resilience4j-spring-boot2:0.13.1')
 }

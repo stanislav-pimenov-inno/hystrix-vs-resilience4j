@@ -1,3 +1,7 @@
+management.endpoints.web:
+  exposure.include: info,health,metrics,prometheus
+
+
 resilience4j.circuitbreaker:
   backends:
     apiCall:
@@ -8,7 +12,7 @@ resilience4j.circuitbreaker:
       eventConsumerBufferSize: 10
       registerHealthIndicator: true
       #recordFailurePredicate: com.foo.FooRecordFailurePredicate
-      recordExceptions:
-          - org.springframework.web.client.HttpServerErrorException
+#      recordExceptions:
+#          - org.springframework.web.client.HttpServerErrorException
       ignoreExceptions:
           - org.springframework.web.client.HttpClientErrorException

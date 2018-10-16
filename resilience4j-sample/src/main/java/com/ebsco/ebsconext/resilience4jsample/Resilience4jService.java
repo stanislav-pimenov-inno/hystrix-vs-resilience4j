@@ -1,11 +1,12 @@
 package com.ebsco.ebsconext.resilience4jsample;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
+import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
+import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import io.github.resilience4j.timelimiter.TimeLimiter;
-import io.github.resilience4j.timelimiter.TimeLimiterConfig;
-import java.time.Duration;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,8 +15,9 @@ import org.springframework.web.client.RestTemplate;
 public class Resilience4jService {
 
   private CircuitBreaker circuitBreaker;
-  private TimeLimiter timeLimiter;
-  private ExecutorService executorService = Executors.newFixedThreadPool(10);
+  //private TimeLimiter timeLimiter;
+  //private ExecutorService executorService = Executors.newFixedThreadPool(10);
+  private Function<String, String> chainedCallable;
 
   @Autowired
   private RestTemplate restTemplate;
@@ -31,19 +33,18 @@ public class Resilience4jService {
 //        .enableAutomaticTransitionFromOpenToHalfOpen()
 //        .build();
 //    // Create a CircuitBreakerRegistry with a custom global configuration
-//    CircuitBreakerRegistry circuitBreakerRegistry = CircuitBreakerRegistry.of(circuitBreakerConfig);
+    //CircuitBreakerRegistry circuitBreakerRegistry = CircuitBreakerRegistry.(circuitBreakerConfig);
 
-    circuitBreaker = CircuitBreaker.ofDefaults("apiCall");
-    // For example, you want to restrict the execution of a long running task to 60 seconds.
-    TimeLimiterConfig config = TimeLimiterConfig.custom()
-        .timeoutDuration(Duration.ofSeconds(10))
-        .cancelRunningFuture(true)
-        .build();
-    // Create TimeLimiter
-    timeLimiter = TimeLimiter.of(config);
+    circuitBreaker = CircuitBreaker.of("apiCall", CircuitBreakerConfig.ofDefaults());
+    chainedCallable = CircuitBreaker.decorateFunction(circuitBreaker, this::restrictedCall);
   }
 
   public String callApi(String api) {
+
+    return chainedCallable.apply(api);
+  }
+
+  private String restrictedCall(String api) {
     return restTemplate.getForObject("http://localhost:8888/" + api, String.class);
   }
 }

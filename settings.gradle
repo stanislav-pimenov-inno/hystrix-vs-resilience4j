@@ -10,4 +10,5 @@
 rootProject.name = 'hystrix-vs-resilience4j'
 include 'hystrix-sample'
 include 'resilience4j-sample'
+include 'api-stub'
 
