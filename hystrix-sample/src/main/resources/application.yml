@@ -1,13 +1,24 @@
+#hystrix:
+#  command.apiCall:
+#    circuitBreaker.enabled: false
+#    fallback.enabled: false
+#    execution.timeout.enabled: false
+#
+#  threadpool.apiThreadPool:
+#    coreSize: 15
+#    maximumSize: 25
+#    maxQueueSize: -1
+#    keepAliveTimeMinutes: 1
+#    allowMaximumSizeToDivergeFromCoreSize: true
+
 hystrix:
   command.apiCall:
-    circuitBreaker.requestVolumeThreshold: 20
-    circuitBreaker.errorThresholdPercentage: 99
-    metrics.rollingStats.timeInMilliseconds: 10000
-    execution.isolation.thread.timeoutInMilliseconds: 2000
+    execution.isolation:
+      strategy: 'SEMAPHORE'
+      semaphore.maxConcurrentRequests: 25
+    circuitBreaker.enabled: false
+    fallback.enabled: false
+    execution.timeout.enabled: false
 
-  threadpool.apiThreadPool:
-    coreSize: 15
-    maximumSize: 20
-    maxQueueSize: -1
-    keepAliveTimeMinutes: 1
-    allowMaximumSizeToDivergeFromCoreSize: true
+management.endpoints.web:
+  exposure.include: '*'

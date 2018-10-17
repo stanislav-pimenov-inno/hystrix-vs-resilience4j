@@ -9,8 +9,8 @@ import org.springframework.web.client.RestTemplate;
 public class ApiHystrixCommand extends HystrixCommand<String> {
 
   private static final String COMMAND_GROUP_KEY = "HystrixApiCalls";
-  private RestTemplate restTemplate;
-  private String api;
+  private final RestTemplate restTemplate;
+  private final String api;
 
   protected ApiHystrixCommand(RestTemplate restTemplate, String api) {
 
@@ -23,7 +23,7 @@ public class ApiHystrixCommand extends HystrixCommand<String> {
   }
 
   @Override
-  protected String run() throws Exception {
+  protected String run() {
     return restTemplate.getForObject("http://localhost:8888/" + api, String.class);
   }
 }
