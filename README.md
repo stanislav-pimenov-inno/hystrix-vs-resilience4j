@@ -41,3 +41,48 @@ http_server_requests_seconds_max{exception="RequestNotPermitted",method="GET",st
 
 
 # Hystrix
+
+## Configuring Hystrix for Bulkhead only
+
+### Using Thread Pool isolation
+
+- Configuration
+```
+hystrix:
+  command.apiCall:
+    circuitBreaker.enabled: false
+    fallback.enabled: false
+    execution.timeout.enabled: false
+
+  threadpool.apiThreadPool:
+    coreSize: 15
+    maximumSize: 25
+    maxQueueSize: -1
+    keepAliveTimeMinutes: 1
+    allowMaximumSizeToDivergeFromCoreSize: true
+```
+ - load testing 25-50rps
+ 
+![](img/hystrix-threadpool-25.png)
+
+### Using Semaphore isolation
+
+- configuration
+
+```
+hystrix:
+  command.apiCall:
+    execution.isolation:
+      strategy: 'SEMAPHORE'
+      semaphore.maxConcurrentRequests: 25
+    circuitBreaker.enabled: false
+    fallback.enabled: false
+    execution.timeout.enabled: false
+```
+
+ - load testing 25-50rps
+ 
+![](img/hystrix-seamaphore-25.png)
+
+### Metrics
+
