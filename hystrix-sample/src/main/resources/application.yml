@@ -1,0 +1,13 @@
+hystrix:
+  command.apiCall:
+    circuitBreaker.requestVolumeThreshold: 20
+    circuitBreaker.errorThresholdPercentage: 99
+    metrics.rollingStats.timeInMilliseconds: 10000
+    execution.isolation.thread.timeoutInMilliseconds: 2000
+
+  threadpool.apiThreadPool:
+    coreSize: 15
+    maximumSize: 20
+    maxQueueSize: -1
+    keepAliveTimeMinutes: 1
+    allowMaximumSizeToDivergeFromCoreSize: true
