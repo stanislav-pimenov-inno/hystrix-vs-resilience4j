@@ -15,13 +15,13 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class Resilience4jService {
 
-  private CircuitBreaker circuitBreaker;
-  private Bulkhead bulkhead;
-  private RateLimiter rateLimiter;
+  private final CircuitBreaker circuitBreaker;
+  private final Bulkhead bulkhead;
+  private final RateLimiter rateLimiter;
 
   //private TimeLimiter timeLimiter;
   //private ExecutorService executorService = Executors.newFixedThreadPool(10);
-  private Function<String, String> chainedCallable;
+  private final Function<String, String> chainedCallable;
 
   @Autowired
   private RestTemplate restTemplate;
