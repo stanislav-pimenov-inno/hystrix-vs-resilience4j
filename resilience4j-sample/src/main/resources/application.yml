@@ -1,18 +1,35 @@
-management.endpoints.web:
-  exposure.include: info,health,metrics,prometheus
+management.endpoints.web.exposure.include: '*'
 
+resilience4j:
+  # bulk head configuration is not working from the box
+  bulkhead:
+    backends:
+      apiCall:
+        maxConcurrentCalls: 2
+        maxWaitTime: 0
+        registerHealthIndicator: true
 
-resilience4j.circuitbreaker:
-  backends:
-    apiCall:
-      ringBufferSizeInClosedState: 5
-      ringBufferSizeInHalfOpenState: 3
-      waitInterval: 5000
-      failureRateThreshold: 50
-      eventConsumerBufferSize: 10
-      registerHealthIndicator: true
-      #recordFailurePredicate: com.foo.FooRecordFailurePredicate
-#      recordExceptions:
-#          - org.springframework.web.client.HttpServerErrorException
-      ignoreExceptions:
-          - org.springframework.web.client.HttpClientErrorException
+  circuitbreaker:
+    backends:
+      apiCall:
+        ringBufferSizeInClosedState: 5
+        ringBufferSizeInHalfOpenState: 3
+        waitInterval: 5000
+        failureRateThreshold: 50
+        eventConsumerBufferSize: 10
+        registerHealthIndicator: true
+        #recordFailurePredicate: com.foo.FooRecordFailurePredicate
+  #      recordExceptions:
+  #          - org.springframework.web.client.HttpServerErrorException
+        ignoreExceptions:
+            - org.springframework.web.client.HttpClientErrorException
+
+  ratelimiter:
+     limiters:
+         apiCall:
+             limitForPeriod: 10
+             limitRefreshPeriodInMillis: 1000
+             timeoutInMillis: 0
+             subscribeForEvents: true
+             registerHealthIndicator: true
+             eventConsumerBufferSize: 100

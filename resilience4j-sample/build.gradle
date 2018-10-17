@@ -3,8 +3,11 @@ dependencies {
     implementation group: 'io.github.resilience4j', name: 'resilience4j-circuitbreaker', version: '0.13.1'
     // https://mvnrepository.com/artifact/io.github.resilience4j/resilience4j-timelimiter
     implementation group: 'io.github.resilience4j', name: 'resilience4j-timelimiter', version: '0.13.1'
-    implementation group: 'io.github.resilience4j', name: 'resilience4j-timelimiter', version: '0.13.1'
+    implementation group: 'io.github.resilience4j', name: 'resilience4j-ratelimiter', version: '0.13.1'
 
+    implementation group: 'io.github.resilience4j', name: 'resilience4j-bulkhead', version: '0.13.1'
+    implementation group: 'io.github.resilience4j', name: 'resilience4j-metrics', version: '0.13.1'
+    implementation group: 'io.github.resilience4j', name: 'resilience4j-prometheus', version: '0.13.1'
 
     // needed for actuator metrics
     implementation('io.github.resilience4j:resilience4j-spring-boot2:0.13.1')
