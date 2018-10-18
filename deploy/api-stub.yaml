@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-stub
+  labels:
+    app: api-stub
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v0
+      kind: Mapping
+      name: api-stub_mapping
+      prefix: /api-stub/
+      service: api-stub:8080
+      tls: upstream
+spec:
+  ports:
+    - port: 8888
+      name: http
+  selector:
+    app: api-stub
+  sessionAffinity: None
+    type: NodePort
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-stub-v1
+  labels:
+    app: api-stub
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: api-stub
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: api-stub
+        version: v1
+    spec:
+      containers:
+        - name: api-stub
+          image: api-stub
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8888
+          resources:
+            limits:
+              cpu: 100m
+              memory: 512Mi
+            requests:
+              cpu: 10m
+              memory: 512Mi
+---

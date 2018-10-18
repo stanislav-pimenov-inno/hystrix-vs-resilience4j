@@ -20,5 +20,4 @@ hystrix:
     fallback.enabled: false
     execution.timeout.enabled: false
 
-management.endpoints.web:
-  exposure.include: '*'
+management.endpoints.web.exposure.include: '*'

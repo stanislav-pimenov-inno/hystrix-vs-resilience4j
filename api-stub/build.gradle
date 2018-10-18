@@ -1,3 +1,7 @@
 dependencies{
     implementation 'com.github.tomakehurst:wiremock:2.18.0'
 }
+
+bootJar {
+    mainClassName = 'com.ebsco.ebsconext.sandbox.ApiStubServer'
+}

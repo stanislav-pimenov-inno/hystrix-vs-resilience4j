@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: resilience4jsample
+  labels:
+    app: resilience4jsample
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v0
+      kind: Mapping
+      name: resilience4jsample_mapping
+      prefix: /resilience4jsample/
+      service: resilience4jsample:8080
+      tls: upstream
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8080"
+    prometheus.io/path: "/actuator/prometheus"
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: resilience4jsample
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resilience4jsample-v1
+  labels:
+    app: resilience4jsample
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: resilience4jsample
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: resilience4jsample
+        version: v1
+    spec:
+      containers:
+        - name: resilience4jsample
+          image: resilience4jsample
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: 600m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 512Mi
+---

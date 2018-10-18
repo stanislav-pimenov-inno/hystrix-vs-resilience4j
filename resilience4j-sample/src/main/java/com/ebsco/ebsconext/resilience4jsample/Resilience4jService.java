@@ -18,6 +18,8 @@ public class Resilience4jService {
   private final CircuitBreaker circuitBreaker;
   private final Bulkhead bulkhead;
   private final RateLimiter rateLimiter;
+  private static final String STUB_URI = "http://apistub:8888/";
+  // TODO: 18.10.18 Make configurable thru application.yaml
 
   //private TimeLimiter timeLimiter;
   //private ExecutorService executorService = Executors.newFixedThreadPool(10);
@@ -63,6 +65,6 @@ public class Resilience4jService {
   }
 
   private String restrictedCall(String api) {
-    return restTemplate.getForObject("http://localhost:8888/" + api, String.class);
+    return restTemplate.getForObject(STUB_URI + api, String.class);
   }
 }

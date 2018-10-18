@@ -12,3 +12,7 @@ dependencies {
     // needed for actuator metrics
     implementation('io.github.resilience4j:resilience4j-spring-boot2:0.13.1')
 }
+
+bootJar {
+    mainClassName = 'com.ebsco.ebsconext.resilience4jsample.Resilience4jSampleApplication'
+}

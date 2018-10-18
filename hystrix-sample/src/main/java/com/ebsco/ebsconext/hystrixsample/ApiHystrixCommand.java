@@ -11,6 +11,8 @@ public class ApiHystrixCommand extends HystrixCommand<String> {
   private static final String COMMAND_GROUP_KEY = "HystrixApiCalls";
   private final RestTemplate restTemplate;
   private final String api;
+  private static final String STUB_URI = "http://apistub:8888/";
+  // TODO: 18.10.18 Make configurable thru application.yaml
 
   protected ApiHystrixCommand(RestTemplate restTemplate, String api) {
 
@@ -24,6 +26,6 @@ public class ApiHystrixCommand extends HystrixCommand<String> {
 
   @Override
   protected String run() {
-    return restTemplate.getForObject("http://localhost:8888/" + api, String.class);
+    return restTemplate.getForObject(STUB_URI + api, String.class);
   }
 }

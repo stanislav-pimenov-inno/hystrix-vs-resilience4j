@@ -4,3 +4,7 @@ dependencies {
     // todo make it available from bom
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix', version: '2.0.1.RELEASE'
 }
+
+bootJar {
+    mainClassName = 'com.ebsco.ebsconext.hystrixsample.HystrixSampleApplication'
+}
