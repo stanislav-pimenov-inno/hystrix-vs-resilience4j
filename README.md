@@ -7,6 +7,7 @@ Integration with Spring Boot 2 | with the help of `spring-cloud-starter-netflix-
 Integration with WebFlux (Reactor) | integrated with JavaRX. Need adaptor for Reactor 3 | with `resilience4j-reactor`: Spring Reactor adapter
 Prometheus metrics | Y (see below) | N ( meaningful metrics exposed just for CircuitBreaker) 
 Configure bulkhead within application.yml from the box | with the help of `spring-cloud-starter-netflix-hystrix` | N (applicable for Ratelimiter and CircuitBreaker only)
+Spring Cloud Config integration | Y | N
 Amount of transitive dependencies | medium: `com.netflix.archaius:archaius-core:0.4.1`, `io.reactivex:rxjava:1.2.0`  | low (something like `io.vavr:vavr:0.9.2`)
 
 # Resilience4j
